@@ -1,0 +1,67 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go
+{
+	"name": "planb",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/aws-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "os-provided"
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"installDirectlyFromGitHubRelease": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers-contrib/features/amplify-cli:2": {
+			"version": "latest"
+		},
+		"ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {
+			"setLocale": true,
+			"theme": "robbyrussell",
+			"plugins": "git docker",
+			"desiredLocale": "en_US.UTF-8 UTF-8"
+		}
+	},
+	"mounts": [
+		{
+			"source": "${localEnv:HOME}/.aws",
+			"target": "/home/vscode/.aws",
+			"type": "bind"
+		},
+		{
+			"source": "${localEnv:HOME}/.config/gh",
+			"target": "/home/vscode/.config/gh",
+			"type": "bind"
+		}
+	],
+	"containerEnv": {
+		"TZ": "Asia/Tokyo"
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "go version",
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"files.readonlyInclude": {
+					"pkg/autogen/**/*": true
+				}
+			},
+			"extensions": [
+				"bufbuild.vscode-buf",
+				"ms-vscode.makefile-tools"
+			]
+		}
+	}
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}

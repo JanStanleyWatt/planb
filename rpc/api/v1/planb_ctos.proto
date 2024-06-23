@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "api/v1/planb_stos.proto";
+import "google/protobuf/timestamp.proto";
+
+service PlanBClientToService {
+  rpc ListFiles(ListFilesRequest) returns (ListFilesResponse) {}
+  rpc UpdateFiles(UpdateFilesRequest) returns (UpdateFilesResponse) {}
+}
+
+message ListFilesRequest {
+  repeated string pathes = 1;
+}
+
+message ListFilesResponse {
+  repeated FileInfoResponse pathes = 1;
+  google.protobuf.Timestamp send_time = 2;
+}
+
+message UpdateFilesRequest {
+  repeated string pathes = 1;
+  google.protobuf.Timestamp send_time = 2;
+}
+
+message UpdateFilesResponse {
+  google.protobuf.Timestamp receipt_time = 1;
+}
