@@ -53,7 +53,9 @@
 		"vscode": {
 			"settings": {
 				"files.readonlyInclude": {
-					"pkg/autogen/**/*": true
+					"pkg/autogen/**/*": true,
+					"buf.lock": true,
+					"go.sum": true
 				}
 			},
 			"extensions": [
