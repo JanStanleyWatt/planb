@@ -1,13 +1,13 @@
-version: v1
-
+version: v2
 managed:
   enabled: true
-  go_package_prefix:
-    default: github.com/JanStanleyWatt/planb/pkg/autogen
+  override:
+    - file_option: go_package_prefix
+      value: github.com/JanStanleyWatt/planb/pkg/autogen/go
 plugins:
-  # - plugin: go
-  #   out: pkg/autogen
-  #   opt: paths=source_relative
-  - plugin: connect-go
+  - local: protoc-gen-go
+    out: pkg/autogen/go
+    opt: paths=source_relative
+  - local: protoc-gen-connect-go
     out: pkg/autogen/go
     opt: paths=source_relative
