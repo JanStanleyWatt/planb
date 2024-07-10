@@ -2,6 +2,8 @@ package server
 
 import (
 	"context"
+	"errors"
+	"io/fs"
 	"os"
 
 	"connectrpc.com/connect"
@@ -20,8 +22,16 @@ func (s *PlanBServiceServer) FileInfo(ctx context.Context, req *connect.Request[
 	path := req.Msg.Path
 
 	info, err := os.Stat(path)
+	if err != nil && errors.Is(err, fs.ErrNotExist) {
+		return nil, connect.NewError(connect.CodeNotFound, err)
+	}
+
+	if err != nil && errors.Is(err, fs.ErrPermission) {
+		return nil, connect.NewError(connect.CodePermissionDenied, err)
+	}
+
 	if err != nil {
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	return &connect.Response[v1c.FileInfoResponse]{
